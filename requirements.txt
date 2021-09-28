@@ -1,0 +1,3 @@
+pyarabic
+farasapy
+nltk
