@@ -7,9 +7,6 @@ import pyarabic.araby as araby
 model_name = "aubmindlab/bert-base-arabertv2"
 arabert_prep = ArabertPreprocessor(model_name=model_name)
 
-df = pd.read_json('sm_ar_data.json')
-ground_truth = df[df['split'] == 'test'].drop(['split', 'tokens', 'tok_len'], axis=1)
-
 def print_scores(trgs, preds, vocab=None, prnt=True):
     b1 = corpus_bleu(trgs, preds, weights=[1.0/1.0])*100
     b2 = corpus_bleu(trgs, preds, weights=[1.0/2.0, 1.0/2.0])*100
@@ -24,7 +21,11 @@ def print_scores(trgs, preds, vocab=None, prnt=True):
         print('-'*25)
     return round(b1, 3), round(b2, 3), round(b3, 3), round(b4, 3)
 
-def calculate_scores(row):
+def calculate_scores(row, DF_PATH):
+
+    df = pd.read_json(DF_PATH)
+    ground_truth = df[df['split'] == 'test'].drop(['split', 'tokens', 'tok_len'], axis=1)
+
     idx = ["old processing, old results", "new processing, new results", "new processing, old results", "old processing, new results"]
     b1s = []
     b2s = []
