@@ -26,7 +26,7 @@ def calculate_scores(row, DF_PATH):
     df = pd.read_json(DF_PATH)
     ground_truth = df[df['split'] == 'test'].drop(['split', 'tokens', 'tok_len'], axis=1)
 
-    idx = ["old processing, old results", "new processing, new results", "new processing, old results", "old processing, new results"]
+    idx = ["old model with old preprocessing", "new model with arabert preprcessing", "old model with arabert preprocessing", "new model with old preprocessing"]
     b1s = []
     b2s = []
     b3s = []
