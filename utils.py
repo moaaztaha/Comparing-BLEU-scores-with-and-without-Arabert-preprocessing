@@ -21,7 +21,7 @@ def print_scores(trgs, preds, vocab=None, prnt=True):
         print('-'*25)
     return round(b1, 3), round(b2, 3), round(b3, 3), round(b4, 3)
 
-def calculate_scores(row, DF_PATH):
+def calculate_scores(row, DF_PATH, manu=False):
 
     df = pd.read_json(DF_PATH)
     ground_truth = df[df['split'] == 'test'].drop(['split', 'tokens', 'tok_len'], axis=1)
@@ -67,6 +67,9 @@ def calculate_scores(row, DF_PATH):
     b2s.append(b2)
     b3s.append(b3)
     b4s.append(b4)
+    
+    if manu:
+        return idx, b1s, b2s, b3s, b4s
     
     out_df = pd.DataFrame({'Exp': idx, 'b1': b1s, 'b2': b2s, 'b3': b3s, 'b4': b4s})
     gt_df = ground_truth[ground_truth.file_name == row['file_name']].drop('file_name', axis=1)
